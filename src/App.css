@@ -1,0 +1,93 @@
+.App {
+  text-align: center;
+  padding: 40px;
+  font-family: Arial, sans-serif;
+}
+
+.save-btn {
+  background-color: #007b7f;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  width: 420px;
+  text-align: left;
+}
+
+.popup input,
+.popup select {
+  width: 100%;
+  margin: 8px 0;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.blue-box {
+  border: 1px solid #007b7f;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #e7f6f7;
+}
+
+.add-schema {
+  margin-top: 12px;
+}
+
+.add-link {
+  color: #007b7f;
+  margin-left: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.save {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+}
+
+.cancel {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+}
+/* {
+  "segment_name": "last_10_days_blog_visits",
+  "schema": [
+    {"first_name": "First Name"},
+    {"account_name": "Account Name"}
+  ]
+} */
