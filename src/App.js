@@ -15,16 +15,19 @@ function App() {
   const [segmentName, setSegmentName] = useState("");
   const [selectedSchemas, setSelectedSchemas] = useState([]);
   const [tempSchema, setTempSchema] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Function to reset all popup data
+  // 🔗 Replace with your own webhook URL from https://webhook.site/
+  const WEBHOOK_URL = "https://webhook.site/your-webhook-url-here";
+
   const resetPopup = () => {
     setSegmentName("");
     setSelectedSchemas([]);
     setTempSchema("");
     setShowPopup(false);
+    setLoading(false);
   };
 
-  // Add new schema dropdown
   const handleAddSchema = () => {
     if (!tempSchema) return;
     const selectedOption = schemaOptions.find((o) => o.value === tempSchema);
@@ -32,7 +35,6 @@ function App() {
     setTempSchema("");
   };
 
-  // Change existing dropdown inside blue box
   const handleSchemaChange = (index, value) => {
     const updatedSchemas = [...selectedSchemas];
     const newOption = schemaOptions.find((o) => o.value === value);
@@ -40,17 +42,35 @@ function App() {
     setSelectedSchemas(updatedSchemas);
   };
 
-  // Save segment and reset popup
-  const handleSaveSegment = () => {
+  const handleSaveSegment = async () => {
     const schemaData = selectedSchemas.map((s) => ({ [s.value]: s.label }));
     const dataToSend = {
       segment_name: segmentName,
       schema: schemaData,
     };
 
-    console.log("Data to send:", dataToSend);
-    alert("Segment saved! Check console for data.");
-    resetPopup(); // Reset everything after saving
+    console.log("Sending to server:", dataToSend);
+    setLoading(true);
+
+    try {
+      const response = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSend),
+      });
+
+      if (response.ok) {
+        alert("✅ Segment saved and data sent successfully!");
+      } else {
+        alert("❌ Failed to send data to server!");
+      }
+    } catch (error) {
+      alert("⚠️ Error sending data: " + error.message);
+    }
+
+    resetPopup();
   };
 
   const availableOptions = schemaOptions.filter(
@@ -77,7 +97,6 @@ function App() {
 
             <p>Add schemas to build the query:</p>
 
-            {/* Blue box */}
             <div className="blue-box">
               {selectedSchemas.map((schema, index) => (
                 <select
@@ -94,7 +113,6 @@ function App() {
               ))}
             </div>
 
-            {/* Dropdown to add new schema */}
             <div className="add-schema">
               <select
                 value={tempSchema}
@@ -113,12 +131,15 @@ function App() {
               </span>
             </div>
 
-            {/* Action buttons */}
             <div className="actions">
-              <button className="save" onClick={handleSaveSegment}>
-                Save the Segment
+              <button
+                className="save"
+                onClick={handleSaveSegment}
+                disabled={loading}
+              >
+                {loading ? "Saving..." : "Save the Segment"}
               </button>
-              <button className="cancel" onClick={resetPopup}>
+              <button className="cancel" onClick={resetPopup} disabled={loading}>
                 Cancel
               </button>
             </div>
