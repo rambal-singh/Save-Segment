@@ -10,7 +10,7 @@ const schemaOptions = [
   { label: "City", value: "city" },
 ];
 
-function App() {
+function SaveSegment() {
   const [showPopup, setShowPopup] = useState(false);
   const [segmentName, setSegmentName] = useState("");
   const [selectedSchemas, setSelectedSchemas] = useState([]);
@@ -141,4 +141,4 @@ function App() {
   );
 }
 
-export default App;
+export default SaveSegment;
