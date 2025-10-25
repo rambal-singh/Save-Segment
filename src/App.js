@@ -15,9 +15,7 @@ function App() {
   const [segmentName, setSegmentName] = useState("");
   const [selectedSchemas, setSelectedSchemas] = useState([]);
   const [tempSchema, setTempSchema] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  // 🔗 Replace with your own webhook URL from https://webhook.site/
   const WEBHOOK_URL = "https://webhook.site/your-webhook-url-here";
 
   const resetPopup = () => {
@@ -25,7 +23,6 @@ function App() {
     setSelectedSchemas([]);
     setTempSchema("");
     setShowPopup(false);
-    setLoading(false);
   };
 
   const handleAddSchema = () => {
@@ -37,6 +34,7 @@ function App() {
 
   const handleSchemaChange = (index, value) => {
     const updatedSchemas = [...selectedSchemas];
+
     const newOption = schemaOptions.find((o) => o.value === value);
     updatedSchemas[index] = newOption;
     setSelectedSchemas(updatedSchemas);
@@ -48,9 +46,6 @@ function App() {
       segment_name: segmentName,
       schema: schemaData,
     };
-
-    console.log("Sending to server:", dataToSend);
-    setLoading(true);
 
     try {
       const response = await fetch(WEBHOOK_URL, {
@@ -132,14 +127,10 @@ function App() {
             </div>
 
             <div className="actions">
-              <button
-                className="save"
-                onClick={handleSaveSegment}
-                disabled={loading}
-              >
-                {loading ? "Saving..." : "Save the Segment"}
+              <button className="save" onClick={handleSaveSegment}>
+                Save the Segment
               </button>
-              <button className="cancel" onClick={resetPopup} disabled={loading}>
+              <button className="cancel" onClick={resetPopup}>
                 Cancel
               </button>
             </div>
